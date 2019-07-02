@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Датчик DHT-11</title>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+</head>
+
+<body>
+  <left>
+    <h1>Температура</h1>
+
+    <canvas id="chart_temp" width="1200" height="400"></canvas>
+    <script>
+      // bar chart data
+      var barData_temp = {
+        labels : [
+          {% for item in labels %}
+            "{{ item }}",
+          {% endfor %}
+        ],
+        datasets : [{
+          fillColor: "rgba(151,187,205,0.2)",
+          strokeColor: "rgba(151,187,205,1)",
+          pointColor: "rgba(151,187,205,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(151,187,205,1)",
+          bezierCurve : false,
+          data : [
+	    {% for item in temp_values %}
+              {{ item }},
+            {% endfor %}]
+          }
+	]
+      }
+      Chart.defaults.global.animationSteps = 50;
+      Chart.defaults.global.tooltipYPadding = 16;
+      Chart.defaults.global.tooltipCornerRadius = 0;
+      Chart.defaults.global.tooltipTitleFontStyle = "normal";
+      Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+      Chart.defaults.global.animationEasing = "easeOutBounce";
+      Chart.defaults.global.responsive = false;
+      Chart.defaults.global.scaleLineColor = "black";
+      Chart.defaults.global.scaleFontSize = 16;
+      // get bar chart canvas
+      var mychart_temp = document.getElementById("chart_temp").getContext("2d");
+      steps = 10
+      max = 50
+      // draw bar chart
+      var LineChartDemo = new Chart(mychart_temp).Line(barData_temp, {
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: 0,
+        scaleShowVerticalLines: true,
+        scaleShowGridLines : true,
+        barShowStroke : true,
+        scaleShowLabels: true,
+        bezierCurve: false,
+      });
+    </script>
+	</left>
+	<right>
+	
+	<h1>Влажность</h1>
+    <canvas id="chart_hum" width="1200" height="400"></canvas>
+    <script>
+      // bar chart data
+      var barData_hum = {
+        labels : [
+          {% for item in labels %}
+            "{{ item }}",
+          {% endfor %}
+        ],
+        datasets : [{
+          fillColor: "rgba(151,187,205,0.2)",
+          strokeColor: "rgba(151,187,205,1)",
+          pointColor: "rgba(151,187,205,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(151,187,205,1)",
+          bezierCurve : false,
+          data : [
+	    {% for item in hum_values %}
+              {{ item }},
+            {% endfor %}]
+          }
+	]
+      }
+      Chart.defaults.global.animationSteps = 50;
+      Chart.defaults.global.tooltipYPadding = 16;
+      Chart.defaults.global.tooltipCornerRadius = 0;
+      Chart.defaults.global.tooltipTitleFontStyle = "normal";
+      Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+      Chart.defaults.global.animationEasing = "easeOutBounce";
+      Chart.defaults.global.responsive = false;
+      Chart.defaults.global.scaleLineColor = "black";
+      Chart.defaults.global.scaleFontSize = 16;
+      // get bar chart canvas
+      var mychart_hum = document.getElementById("chart_hum").getContext("2d");
+      steps = 10
+      max = 95
+      // draw bar chart
+      var LineChartDemo = new Chart(mychart_hum).Line(barData_hum, {
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: 0,
+        scaleShowVerticalLines: true,
+        scaleShowGridLines : true,
+        barShowStroke : true,
+        scaleShowLabels: true,
+        bezierCurve: false,
+      });
+    </script>
+  </right>
+  
+</body>
+</html>
